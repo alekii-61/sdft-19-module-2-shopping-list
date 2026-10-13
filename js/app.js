@@ -23,15 +23,27 @@ form.addEventListener("submit", (event) => {
 
 })
 
-function removeItem(event) {
-    event.target.closest("tr").remove();
-    console.log(items)
+/* search funcionality*/
+const  searchInput = document.querySelector(".search-input");
+searchInput.addEventListener("input", (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredItems = items.filter((item) =>
+        item.itemName.toLowerCase().includes(searchTerm)          
+    
+    );
+    displayItem(filteredItems);
+});
+
+function removeItem(index) {
+    items.splice(index, 1);
+    displayItem(items);
 }
 
 
 function displayItem(items) {
-    const tbody = document.querySelector("tbody.stock")
-    items.forEach((item) => {
+    const tbody = document.querySelector("tbody.stock");
+    tbody.innerHTML = "";
+    items.forEach((item, index) => {
         tbody.innerHTML += `
         <tr>
             <td>${item.itemName}</td>
